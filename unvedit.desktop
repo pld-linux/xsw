@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=XShipWars universe editor
+Comment=XShipWars universe editor
+Exec=unvedit
+Terminal=0
+Type=Application
