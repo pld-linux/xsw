@@ -13,17 +13,13 @@ Source3:	unvedit.desktop
 Source4:	swserv.init
 Source5:	swserv.sysconfig
 Patch0:		%{name}-paths.patch
+Patch1:		%{name}-fix.patch
 URL:		http://wolfpack.twu.net/ShipWars/XShipWars/
 BuildRequires:	XFree86-devel
 BuildRequires:	esound-devel
 BuildRequires:	libjsw-devel
 BuildRequires:	yiff-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
-
-%define		_xprefix	/usr/X11R6
-%define		_xbindir	/usr/X11R6/bin
-%define		_xmandir	/usr/X11R6/man
-%define		_xdatadir	/usr/X11R6/share
 
 %description
 XShipWars is a highly customizable and massivly multiplayer space
@@ -37,9 +33,9 @@ wielu graczy do grania przez Internet.
 Summary:	XShipWars client
 Summary(pl):	Klient XShipWars
 Group:		Applications/Games
-Requires:	%{name}-sounds
-Requires:	%{name}-images
-Requires:	%{name}-data
+Requires:	xsw-sounds
+Requires:	xsw-images
+Requires:	xsw-data
 
 %description client
 XShipWars is a highly customizable and massivly multiplayer space
@@ -54,7 +50,14 @@ wielu graczy do grania przez Internet. Ten pakiet zawiera klienta.
 Summary:	XShipWars server
 Summary(pl):	Serwer XShipWars
 Group:		Applications/Games
-Prereq:		/sbin/chkconfig
+PreReq:		rc-scripts
+Requires(pre):	/usr/bin/getgid
+Requires(pre):	/bin/id
+Requires(pre):	/usr/sbin/groupadd
+Requires(pre):	/usr/sbin/useradd
+Requires(post,preun):	/sbin/chkconfig
+Requires(postun):	/usr/sbin/groupdel
+Requires(postun):	/usr/sbin/userdel
 
 %description server
 XShipWars is a highly customizable and massivly multiplayer space
@@ -69,6 +72,7 @@ wielu graczy do grania przez Internet. Ten pakiet zawiera serwer.
 Summary:	XShipWars monitor
 Summary(pl):	Monitor XShipWars
 Group:		Applications/Games
+Requires:	%{name}-client
 
 %description monitor
 XShipWars is a highly customizable and massivly multiplayer space
@@ -83,6 +87,7 @@ wielu graczy do grania przez Internet. Ten pakiet zawiera monitor gry.
 Summary:	XShipWars universe editor
 Summary(pl):	Edytor wszech¶wiata XShipWars
 Group:		Applications/Games
+Requires:	%{name}-client
 
 %description unvedit
 XShipWars is a highly customizable and massivly multiplayer space
@@ -95,41 +100,56 @@ wielu graczy do grania przez Internet. Ten pakiet zawiera edytor
 wszech¶wiata do gry.
 
 %prep
-%setup -qn %{name}%{version}
+%setup -q
 %patch0 -p1
+%patch1 -p1
 
 %build
-%configure
-%{__make} client_linux
-%{__make} server_linux
-%{__make} monitor_linux
-%{__make} unvedit_linux
+# not autoconf-generated configure
+./configure.client Linux \
+	--prefix=%{_prefix} \
+	--CFLAGS="%{rpmcflags}"
+%{__make} -f Makefile.client
+
+./configure.server Linux \
+	--prefix=%{_prefix} \
+	--CFLAGS="%{rpmcflags}"
+%{__make} -f Makefile.server
+
+./configure.monitor Linux \
+	--prefix=%{_prefix} \
+	--CFLAGS="%{rpmcflags}"
+%{__make} -f Makefile.monitor
+
+./configure.unvedit Linux \
+	--prefix=%{_prefix} \
+	--CFLAGS="%{rpmcflags}"
+%{__make} -f Makefile.unvedit
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_xdatadir}/xshipwars/{images,sounds}
+install -d $RPM_BUILD_ROOT%{_datadir}/xshipwars/{images,sounds}
 install -d $RPM_BUILD_ROOT{%{_applnkdir}/Games,/etc/sysconfig,/etc/rc.d/init.d}
 
-%{__make} client_install_unix \
-	GAMES_DIR=$RPM_BUILD_ROOT%{_xbindir} \
-	XSW_DIR=$RPM_BUILD_ROOT%{_xdatadir}/xshipwars \
+%{__make} -f Makefile.client install \
+	GAMES_DIR=$RPM_BUILD_ROOT%{_bindir} \
+	XSW_DIR=$RPM_BUILD_ROOT%{_datadir}/xshipwars \
 	XSW_ETC_DIR=$RPM_BUILD_ROOT%{_sysconfdir}/xshipwars
 
 rm -f $RPM_BUILD_ROOT%{_sysconfdir}/xshipwars/universes # comes with data
 
-%{__make} server_install_unix \
+%{__make} -f Makefile.server install \
 	SWSERV_BASE_DIR=$RPM_BUILD_ROOT/home/services/swserv \
 	SWSERV_BIN_DIR=$RPM_BUILD_ROOT%{_bindir} \
 	SWSERV_ETC_DIR=$RPM_BUILD_ROOT%{_sysconfdir}/swserv
 
-%{__make} monitor_install_unix \
-	DIR_SWSERV=$RPM_BUILD_ROOT%{_xprefix} \
-	GAMES_DIR=$RPM_BUILD_ROOT%{_xbindir} \
-	PROG_DATA_DIR=$RPM_BUILD_ROOT%{_xdatadir}/xshipwars
+%{__make} -f Makefile.monitor install \
+	GAMES_DIR=$RPM_BUILD_ROOT%{_bindir} \
+	XSW_DIR=$RPM_BUILD_ROOT%{_datadir}/xshipwars
 
-%{__make} unvedit_install_unix \
-	GAMES_BIN=$RPM_BUILD_ROOT%{_xbindir} \
-	PROG_DATA_DIR=$RPM_BUILD_ROOT%{_xdatadir}/xshipwars
+%{__make} -f Makefile.unvedit install \
+	GAMES_BIN=$RPM_BUILD_ROOT%{_bindir} \
+	XSW_DATA_DIR=$RPM_BUILD_ROOT%{_datadir}/xshipwars
 
 install %{SOURCE1} $RPM_BUILD_ROOT%{_applnkdir}/Games
 install %{SOURCE2} $RPM_BUILD_ROOT%{_applnkdir}/Games
@@ -141,13 +161,23 @@ install %{SOURCE5} $RPM_BUILD_ROOT/etc/sysconfig/swserv
 rm -rf $RPM_BUILD_ROOT
 
 %pre server
-grep -q swserv /etc/group || (
-	/usr/sbin/groupadd -g 91 -r -f swserv 1>&2 || :
-)
-grep -q swserv /etc/passwd || (
-	/usr/sbin/useradd -M -o -r -u 91 \
-		-g swserv -c "XShipWars server" -d /home/services/swserv swserv 1>&2 || :
-)
+if [ -n "`/usr/bin/getgid swserv`" ]; then
+	if [ "`/usr/bin/getgid swserv`" != "91" ]; then
+		echo "Error: group swserv doesn't have gid=91. Correct this before installing xsw-server." 1>&2
+		exit 1
+	fi
+else
+	/usr/sbin/groupadd -g 91 -r -f swserv 1>&2
+fi
+if [ -n "`/bin/id -u swserv 2>/dev/null`" ]; then
+	if [ "`/bin/id -u swserv`" != "91" ]; then
+		echo "Error: user swserv doesn't have uid=91. Correct this before installing xsw-server." 1>&2
+		exit 1
+	fi
+else
+	/usr/sbin/useradd -M -o -r -u 91 -g swserv -c "XShipWars server" \
+		-d /home/services/swserv -s /bin/sh swserv 1>&2
+fi
 
 %post server
 if [ "$1" = "1" ]; then
@@ -160,7 +190,7 @@ else
 fi
 
 %preun server
-if [ "$1" = 0 ]; then
+if [ "$1" = "0" ]; then
 	if [ -f /var/lock/sybsys/swserv ]; then
 		/etc/rc.d/init.d/swserv stop >&2
 	fi
@@ -168,20 +198,27 @@ if [ "$1" = 0 ]; then
 	rm -f %{_datadir}/swserv/errors
 fi
 
+%postun server
+if [ "$1" = "0" ]; then
+	/usr/sbin/userdel swserv
+	/usr/sbin/groupdel swserv
+fi
+
 %files client
 %defattr(644,root,root,755)
-%doc LICENSE* DOCS_NOW_ONLINE*
+%doc CREDITS LICENSE README TODO
 %dir %{_sysconfdir}/xshipwars
-%config %verify(not size mtime md5) %{_sysconfdir}/xshipwars/*
-%attr(755,root,root) %{_xbindir}/xsw
-%{_xdatadir}/xshipwars/images
-%{_xdatadir}/xshipwars/sounds
+%config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/xshipwars/*
+%attr(755,root,root) %{_bindir}/xsw
+%dir %{_datadir}/xshipwars
+%{_datadir}/xshipwars/images
+%{_datadir}/xshipwars/sounds
 %{_applnkdir}/Games/xsw.desktop
 
 %files server
 %defattr(644,root,root,755)
-%doc LICENSE* DOCS_NOW_ONLINE*
-%dir %attr(751,root,swserv) /home/services/swserv
+%doc CREDITS LICENSE README TODO
+%attr(751,root,swserv) %dir /home/services/swserv
 %attr(775,root,swserv) /home/services/swserv/db
 %attr(775,root,swserv) /home/services/swserv/logs
 %attr(775,root,swserv) /home/services/swserv/public_html
@@ -189,20 +226,18 @@ fi
 %attr(774,root,swserv) /home/services/swserv/restart
 %attr(754,root,swserv) %{_bindir}/swserv
 %dir %{_sysconfdir}/swserv
-%config %verify(not size mtime md5) %{_sysconfdir}/swserv/*
-%config %verify(not size mtime md5) /etc/sysconfig/swserv
+%config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/swserv/*
+%config(noreplace) %verify(not size mtime md5) /etc/sysconfig/swserv
 %attr(754,root,root) /etc/rc.d/init.d/swserv
 
 %files monitor
 %defattr(644,root,root,755)
-%doc LICENSE* DOCS_NOW_ONLINE*
-%attr(755,root,root) %{_xbindir}/monitor
-%{_xdatadir}/xshipwars/images/monitor
+%attr(755,root,root) %{_bindir}/monitor
+%{_datadir}/xshipwars/images/monitor
 %{_applnkdir}/Games/monitor.desktop
 
 %files unvedit
 %defattr(644,root,root,755)
-%doc LICENSE* DOCS_NOW_ONLINE*
-%attr(755,root,root) %{_xbindir}/unvedit
-%{_xdatadir}/xshipwars/images/unvedit
+%attr(755,root,root) %{_bindir}/unvedit
+%{_datadir}/xshipwars/images/unvedit
 %{_applnkdir}/Games/unvedit.desktop
