@@ -4,7 +4,7 @@ Name:		xsw
 Version:	1.34.0
 Release:	2
 License:	GPL-like
-Group:		Applications/Games
+Group:		X11/Applications/Games
 Source0:	ftp://gd.tuwien.ac.at/games/wolfpack/%{name}-%{version}.tar.bz2
 # Source0-md5:	09a3109f8588af9940d71522c713007c
 Source1:	%{name}.desktop
@@ -32,7 +32,7 @@ wielu graczy do grania przez Internet.
 %package client
 Summary:	XShipWars client
 Summary(pl):	Klient XShipWars
-Group:		Applications/Games
+Group:		X11/Applications/Games
 Requires:	xsw-sounds
 Requires:	xsw-images
 Requires:	xsw-data
@@ -49,7 +49,7 @@ wielu graczy do grania przez Internet. Ten pakiet zawiera klienta.
 %package server
 Summary:	XShipWars server
 Summary(pl):	Serwer XShipWars
-Group:		Applications/Games
+Group:		X11/Applications/Games
 PreReq:		rc-scripts
 Requires(pre):	/usr/bin/getgid
 Requires(pre):	/bin/id
@@ -71,7 +71,7 @@ wielu graczy do grania przez Internet. Ten pakiet zawiera serwer.
 %package monitor
 Summary:	XShipWars monitor
 Summary(pl):	Monitor XShipWars
-Group:		Applications/Games
+Group:		X11/Applications/Games
 Requires:	%{name}-client
 
 %description monitor
@@ -86,7 +86,7 @@ wielu graczy do grania przez Internet. Ten pakiet zawiera monitor gry.
 %package unvedit
 Summary:	XShipWars universe editor
 Summary(pl):	Edytor wszech¶wiata XShipWars
-Group:		Applications/Games
+Group:		X11/Applications/Games
 Requires:	%{name}-client
 
 %description unvedit
