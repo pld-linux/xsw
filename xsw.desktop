@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=XShipWars client
+Comment=XShipWars client
+Exec=xsw
+Terminal=0
+Type=Application
