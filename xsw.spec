@@ -6,6 +6,7 @@ Release:	2
 License:	GPL-like
 Group:		Applications/Games
 Source0:	ftp://gd.tuwien.ac.at/games/wolfpack/%{name}-%{version}.tar.bz2
+# Source0-md5:	09a3109f8588af9940d71522c713007c
 Source1:	%{name}.desktop
 Source2:	monitor.desktop
 Source3:	unvedit.desktop
