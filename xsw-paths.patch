@@ -1,6 +1,6 @@
 diff -durN xsw1.33h.orig/client/xshipwarsrc xsw1.33h/client/xshipwarsrc
 --- xsw1.33h.orig/client/xshipwarsrc	Wed Jul 19 23:27:51 2000
-+++ xsw1.33h/client/xshipwarsrc	Sat May  5 18:36:02 2001
++++ xsw1.33h/client/xshipwarsrc	Mon May  7 16:35:25 2001
 @@ -13,8 +13,8 @@
  # Directories and files:
  
@@ -14,7 +14,7 @@ diff -durN xsw1.33h.orig/client/xshipwarsrc xsw1.33h/client/xshipwarsrc
  DownloadsDir = .shipwars
 diff -durN xsw1.33h.orig/client/xsw.h xsw1.33h/client/xsw.h
 --- xsw1.33h.orig/client/xsw.h	Tue Jul  4 05:06:38 2000
-+++ xsw1.33h/client/xsw.h	Sat May  5 18:36:02 2001
++++ xsw1.33h/client/xsw.h	Mon May  7 16:35:25 2001
 @@ -151,10 +151,10 @@
  #define DEF_SW_SERVER_DIR	CWD_STR
  #else
@@ -32,7 +32,7 @@ diff -durN xsw1.33h.orig/client/xsw.h xsw1.33h/client/xsw.h
  #endif
 diff -durN xsw1.33h.orig/monitor/config.h xsw1.33h/monitor/config.h
 --- xsw1.33h.orig/monitor/config.h	Wed Jan  5 07:14:20 2000
-+++ xsw1.33h/monitor/config.h	Sat May  5 18:36:02 2001
++++ xsw1.33h/monitor/config.h	Mon May  7 16:35:25 2001
 @@ -22,7 +22,7 @@
  /*
   *	Default path containing the images:
@@ -44,7 +44,7 @@ diff -durN xsw1.33h.orig/monitor/config.h xsw1.33h/monitor/config.h
   *	Default toplevel path of the server:
 diff -durN xsw1.33h.orig/server/default.conf xsw1.33h/server/default.conf
 --- xsw1.33h.orig/server/default.conf	Wed Jul 19 23:28:10 2000
-+++ xsw1.33h/server/default.conf	Sat May  5 18:36:45 2001
++++ xsw1.33h/server/default.conf	Mon May  7 16:35:25 2001
 @@ -66,7 +66,7 @@
  #       ShipWars server program itself and related utility programs
  #	go here.
@@ -63,9 +63,30 @@ diff -durN xsw1.33h.orig/server/default.conf xsw1.33h/server/default.conf
  
  
  #   Logs directory:
+diff -durN xsw1.33h.orig/server/restart xsw1.33h/server/restart
+--- xsw1.33h.orig/server/restart	Wed Feb 16 01:04:14 2000
++++ xsw1.33h/server/restart	Mon May  7 16:39:14 2001
+@@ -16,7 +16,7 @@
+ 
+ #   Specify your configuration file
+ #
+-set CONF = etc/generic.conf
++set CONF = /etc/swserv/generic.conf
+ 
+ 
+ 
+@@ -42,7 +42,7 @@
+ #   server's configuration file.
+ #
+ if (-r $CONF) then
+-        bin/swserv $CONF
++        /usr/bin/swserv $CONF
+ else
+         echo "Cannot find configuration file: $CONF"
+ endif
 diff -durN xsw1.33h.orig/server/swserv.h xsw1.33h/server/swserv.h
 --- xsw1.33h.orig/server/swserv.h	Tue Jul  4 05:07:29 2000
-+++ xsw1.33h/server/swserv.h	Sat May  5 18:36:02 2001
++++ xsw1.33h/server/swserv.h	Mon May  7 16:35:25 2001
 @@ -115,9 +115,9 @@
  # define ETC_DIR		"."
  #else
@@ -80,7 +101,7 @@ diff -durN xsw1.33h.orig/server/swserv.h xsw1.33h/server/swserv.h
  # define SWSERV_PUBLIC_HTML_DIR	"/home/swserv/public_html"
 diff -durN xsw1.33h.orig/unvedit/config.h xsw1.33h/unvedit/config.h
 --- xsw1.33h.orig/unvedit/config.h	Sat Jul 15 22:07:57 2000
-+++ xsw1.33h/unvedit/config.h	Sat May  5 18:36:02 2001
++++ xsw1.33h/unvedit/config.h	Mon May  7 16:35:25 2001
 @@ -10,8 +10,8 @@
  /*
   *	Default paths:
