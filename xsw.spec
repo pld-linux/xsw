@@ -2,7 +2,7 @@ Summary:	XShipWars - Multiplayer space gaming system
 Summary(pl):	XShipWars - System gry kosmicznej dla wielu graczy
 Name:		xsw
 Version:	1.34.0
-Release:	2
+Release:	3
 License:	GPL-like
 Group:		X11/Applications/Games
 Source0:	ftp://gd.tuwien.ac.at/games/wolfpack/%{name}-%{version}.tar.bz2
@@ -55,7 +55,9 @@ PreReq:		rc-scripts
 Requires(pre):	/bin/id
 Requires(pre):	/usr/bin/getgid
 Requires(pre):	/usr/sbin/groupadd
+Requires(pre):	/usr/sbin/groupmod
 Requires(pre):	/usr/sbin/useradd
+Requires(pre):	/usr/sbin/usermod
 Requires(post,preun):	/sbin/chkconfig
 Requires(postun):	/usr/sbin/groupdel
 Requires(postun):	/usr/sbin/userdel
@@ -165,20 +167,28 @@ rm -rf $RPM_BUILD_ROOT
 
 %pre server
 if [ -n "`/usr/bin/getgid swserv`" ]; then
-	if [ "`/usr/bin/getgid swserv`" != "91" ]; then
-		echo "Error: group swserv doesn't have gid=91. Correct this before installing xsw-server." 1>&2
-		exit 1
+	if [ "`/usr/bin/getgid swserv`" != "96" ]; then
+		if [ "$1" = 1 -a "`/usr/bin/getgid swserv`" = "91" ]; then
+			/usr/sbin/groupmod -g 96 swserv
+		else
+			echo "Error: group swserv doesn't have gid=96. Correct this before installing xsw-server." 1>&2
+			exit 1
+		fi
 	fi
 else
-	/usr/sbin/groupadd -g 91 -r -f swserv 1>&2
+	/usr/sbin/groupadd -g 96 -r -f swserv 1>&2
 fi
 if [ -n "`/bin/id -u swserv 2>/dev/null`" ]; then
-	if [ "`/bin/id -u swserv`" != "91" ]; then
-		echo "Error: user swserv doesn't have uid=91. Correct this before installing xsw-server." 1>&2
-		exit 1
+	if [ "`/bin/id -u swserv`" != "96" ]; then
+		if [ "$1" = 1 -a "`/bin/id -u swserv`" = "91" ]; then
+			/usr/sbin/usermod -u 96 swserv 
+		else
+			echo "Error: user swserv doesn't have uid=96. Correct this before installing xsw-server." 1>&2
+			exit 1
+		fi
 	fi
 else
-	/usr/sbin/useradd -M -o -r -u 91 -g swserv -c "XShipWars server" \
+	/usr/sbin/useradd -M -o -r -u 96 -g swserv -c "XShipWars server" \
 		-d /home/services/swserv -s /bin/sh swserv 1>&2
 fi
 
