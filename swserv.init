@@ -1,0 +1,95 @@
+#!/bin/sh
+#
+# chkconfig:	- 98 03
+# description:	Starts and stops the XShipWars server 
+#
+
+export PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/X11R6/bin
+
+# Source function library.
+. /etc/rc.d/init.d/functions
+
+# Source networking configuration.
+. /etc/sysconfig/network
+
+# Demon specified configuration.
+. /etc/sysconfig/swserv
+
+# Check that networking is up.
+if is_no "${NETWORKING}"; then
+        msg_Network_Down swserv
+        exit 1
+fi
+
+TMPDIR="/tmp"; export TMPDIR
+
+case "$1" in
+    start)
+        if [ ! -f /var/lock/subsys/swserv ]; then
+		cd /home/swserv
+		
+		msg_starting swserv
+
+		#   Copy the original (in) database file to a backup (old).
+		#
+		if [ -f $UNVIN ] ; then
+			mv -f $UNVIN $UNVOLD
+		fi
+
+		#   Move (if exists) the new database (out) to the original.
+		#   If the new universe (out) does not exist, copy the backup to
+		#   the original (in).
+		#
+		if [ -f $UNVOUT ] ; then
+			mv -f $UNVOUT $UNVIN
+		else
+			cp $UNVOLD $UNVIN
+		fi
+
+		#   Run the server, the first parameter must be the name of the
+		#   server's configuration file.
+		#
+		if [ -f $CONF ] ; then
+			daemon su swserv -c "\"exec swserv $CONF\"" 
+			RETVAL=$?
+			[ $RETVAL -eq 0 ] && touch /var/lock/subsys/swserv
+		else
+			fail
+			echo "Cannot find configuration file: $CONF"
+		fi
+        else
+                msg_Already_Running swserv
+                exit 1
+        fi
+	;;
+    stop)
+        if [ -f /var/lock/subsys/swserv ]; then
+                msg_stopping swserv
+		killproc swserv
+		rm -f /var/lock/subsys/swserv >/dev/null 2>&1
+        else
+                msg_Not_Running swserv
+                exit 1
+        fi
+	;;
+   status)
+    	status swserv
+	exit $?
+	;;
+  restart)
+	$0 stop
+	$0 start
+	;;
+  reload)
+	if [ -f /var/lock/subsys/swserv ]; then
+	        msg_reloading swserv
+	        killproc swserv
+	else
+	        msg_Not_Running swserv
+	        exit 1
+        fi
+	;;
+  *)
+	msg_Usage "$0 {start|stop|restart|reload|status}"
+	exit 1
+esac
