@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=XShipWars monitor
+Comment=XShipWars monitor
+Exec=monitor
+Terminal=0
+Type=Application
