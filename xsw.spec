@@ -16,8 +16,8 @@ Patch0:		%{name}-paths.patch
 URL:		http://wolfpack.twu.net/ShipWars/XShipWars/
 BuildRequires:	XFree86-devel
 BuildRequires:	esound-devel
-BuildRequires:	yiff-devel
 BuildRequires:	libjsw-devel
+BuildRequires:	yiff-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_xprefix	/usr/X11R6
@@ -111,25 +111,25 @@ install -d $RPM_BUILD_ROOT%{_xdatadir}/xshipwars/{images,sounds}
 install -d $RPM_BUILD_ROOT{%{_applnkdir}/Games,/etc/sysconfig,/etc/rc.d/init.d}
 
 %{__make} client_install_unix \
-	GAMES_DIR=$RPM_BUILD_ROOT/%{_xbindir} \
-	XSW_DIR=$RPM_BUILD_ROOT/%{_xdatadir}/xshipwars \
-	XSW_ETC_DIR=$RPM_BUILD_ROOT/%{_sysconfdir}/xshipwars
+	GAMES_DIR=$RPM_BUILD_ROOT%{_xbindir} \
+	XSW_DIR=$RPM_BUILD_ROOT%{_xdatadir}/xshipwars \
+	XSW_ETC_DIR=$RPM_BUILD_ROOT%{_sysconfdir}/xshipwars
 
-rm -f $RPM_BUILD_ROOT/%{_sysconfdir}/xshipwars/universes # comes with data
+rm -f $RPM_BUILD_ROOT%{_sysconfdir}/xshipwars/universes # comes with data
 
 %{__make} server_install_unix \
 	SWSERV_BASE_DIR=$RPM_BUILD_ROOT/home/services/swserv \
-	SWSERV_BIN_DIR=$RPM_BUILD_ROOT/%{_bindir} \
-	SWSERV_ETC_DIR=$RPM_BUILD_ROOT/%{_sysconfdir}/swserv
+	SWSERV_BIN_DIR=$RPM_BUILD_ROOT%{_bindir} \
+	SWSERV_ETC_DIR=$RPM_BUILD_ROOT%{_sysconfdir}/swserv
 
 %{__make} monitor_install_unix \
-	DIR_SWSERV=$RPM_BUILD_ROOT/%{_xprefix} \
-	GAMES_DIR=$RPM_BUILD_ROOT/%{_xbindir} \
-	PROG_DATA_DIR=$RPM_BUILD_ROOT/%{_xdatadir}/xshipwars
+	DIR_SWSERV=$RPM_BUILD_ROOT%{_xprefix} \
+	GAMES_DIR=$RPM_BUILD_ROOT%{_xbindir} \
+	PROG_DATA_DIR=$RPM_BUILD_ROOT%{_xdatadir}/xshipwars
 
 %{__make} unvedit_install_unix \
-	GAMES_BIN=$RPM_BUILD_ROOT/%{_xbindir} \
-	PROG_DATA_DIR=$RPM_BUILD_ROOT/%{_xdatadir}/xshipwars
+	GAMES_BIN=$RPM_BUILD_ROOT%{_xbindir} \
+	PROG_DATA_DIR=$RPM_BUILD_ROOT%{_xdatadir}/xshipwars
 
 install %{SOURCE1} $RPM_BUILD_ROOT%{_applnkdir}/Games
 install %{SOURCE2} $RPM_BUILD_ROOT%{_applnkdir}/Games
@@ -142,11 +142,11 @@ rm -rf $RPM_BUILD_ROOT
 
 %pre server
 grep -q swserv /etc/group || (
-    /usr/sbin/groupadd -g 91 -r -f swserv 1>&2 || :
+	/usr/sbin/groupadd -g 91 -r -f swserv 1>&2 || :
 )
 grep -q swserv /etc/passwd || (
-    /usr/sbin/useradd -M -o -r -u 91 \
-        -g swserv -c "XShipWars server" -d /home/services/swserv swserv 1>&2 || :
+	/usr/sbin/useradd -M -o -r -u 91 \
+		-g swserv -c "XShipWars server" -d /home/services/swserv swserv 1>&2 || :
 )
 
 %post server
