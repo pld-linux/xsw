@@ -16,18 +16,22 @@ export PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/X11R6/bin
 . /etc/sysconfig/swserv
 
 # Check that networking is up.
-if is_no "${NETWORKING}"; then
-        msg_Network_Down swserv
-        exit 1
+if is_yes "${NETWORKING}"; then
+	if [ ! -f /var/lock/subsys/network ]; then
+		msg_network_down swserv
+		exit 1
+	fi
+else
+	exit 0
 fi
 
 TMPDIR="/tmp"; export TMPDIR
 
+
 case "$1" in
-    start)
-        if [ ! -f /var/lock/subsys/swserv ]; then
+  start)
+	if [ ! -f /var/lock/subsys/swserv ]; then
 		cd /home/services/swserv
-		
 		msg_starting swserv
 
 		#   Copy the original (in) database file to a backup (old).
@@ -55,41 +59,43 @@ case "$1" in
 			[ $RETVAL -eq 0 ] && touch /var/lock/subsys/swserv
 		else
 			fail
-			echo "Cannot find configuration file: $CONF"
+			nls "Cannot find configuration file: %s" "$CONF"
+			exit 1
 		fi
-        else
-                msg_Already_Running swserv
-                exit 1
-        fi
+	else
+		msg_already_running swserv
+		exit 1
+	fi
 	;;
-    stop)
-        if [ -f /var/lock/subsys/swserv ]; then
-                msg_stopping swserv
+  stop)
+	if [ -f /var/lock/subsys/swserv ]; then
+		msg_stopping swserv
 		killproc swserv
 		rm -f /var/lock/subsys/swserv >/dev/null 2>&1
-        else
-                msg_Not_Running swserv
-                exit 1
-        fi
+	else
+		msg_not_running swserv
+		exit 1
+	fi
 	;;
-   status)
-    	status swserv
+  status)
+	status swserv
 	exit $?
 	;;
   restart)
 	$0 stop
 	$0 start
 	;;
-  reload)
+  reload|force-reload)
 	if [ -f /var/lock/subsys/swserv ]; then
-	        msg_reloading swserv
-	        killproc swserv
+		msg_reloading swserv
+		killproc swserv
+		RETVAL=$?
 	else
-	        msg_Not_Running swserv
-	        exit 1
-        fi
+		msg_not_running swserv
+		exit 1
+	fi
 	;;
   *)
-	msg_Usage "$0 {start|stop|restart|reload|status}"
+	msg_usage "$0 {start|stop|restart|reload|force-reload|status}"
 	exit 1
 esac
