@@ -1,20 +1,20 @@
 Summary:	XShipWars - Multiplayer space gaming system
 Summary(pl):	XShipWars - System gry kosmicznej dla wielu graczy
 Name:		xsw
-Version:	1.33h
-Release:	2
+Version:	1.34.0
+Release:	1
 License:	Modified GPL
 Group:		Applications/Games
 Group(de):	Applikationen/Spiele
 Group(pl):	Aplikacje/Gry
-Source0:	ftp://fox.mit.edu/pub/%{name}/%{name}%{version}.tgz
+Source0:	ftp://gd.tuwien.ac.at/games/wolfpack/%{name}-%{version}.tar.bz2
 Source1:	%{name}.desktop
 Source2:	monitor.desktop
 Source3:	unvedit.desktop
 Source4:	swserv.init
 Source5:	swserv.sysconfig
 Patch0:		%{name}-paths.patch
-URL:		http://wolfpack.tfu.net/ShipWars/XShipWars/
+URL:		http://wolfpack.twu.net/ShipWars/XShipWars/
 BuildRequires:	XFree86-devel
 BuildRequires:	esound-devel
 BuildRequires:	yiff-devel
