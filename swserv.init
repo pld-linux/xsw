@@ -27,7 +27,7 @@ fi
 
 TMPDIR="/tmp"; export TMPDIR
 
-
+RETVAL=0
 case "$1" in
   start)
 	if [ ! -f /var/lock/subsys/swserv ]; then
@@ -36,7 +36,7 @@ case "$1" in
 
 		#   Copy the original (in) database file to a backup (old).
 		#
-		if [ -f $UNVIN ] ; then
+		if [ -f $UNVIN ]; then
 			mv -f $UNVIN $UNVOLD
 		fi
 
@@ -44,7 +44,7 @@ case "$1" in
 		#   If the new universe (out) does not exist, copy the backup to
 		#   the original (in).
 		#
-		if [ -f $UNVOUT ] ; then
+		if [ -f $UNVOUT ]; then
 			mv -f $UNVOUT $UNVIN
 		else
 			cp $UNVOLD $UNVIN
@@ -53,18 +53,17 @@ case "$1" in
 		#   Run the server, the first parameter must be the name of the
 		#   server's configuration file.
 		#
-		if [ -f $CONF ] ; then
+		if [ -f $CONF ]; then
 			daemon su swserv -c "\"exec swserv $CONF\"" 
 			RETVAL=$?
 			[ $RETVAL -eq 0 ] && touch /var/lock/subsys/swserv
 		else
 			fail
-			nls "Cannot find configuration file: %s" "$CONF"
-			exit 1
+			nls "Cannot find configuration file: %s" "$CONF" >&2
+			exit 6
 		fi
 	else
 		msg_already_running swserv
-		exit 1
 	fi
 	;;
   stop)
@@ -74,7 +73,6 @@ case "$1" in
 		rm -f /var/lock/subsys/swserv >/dev/null 2>&1
 	else
 		msg_not_running swserv
-		exit 1
 	fi
 	;;
   status)
@@ -84,6 +82,7 @@ case "$1" in
   restart)
 	$0 stop
 	$0 start
+	exit $?
 	;;
   reload|force-reload)
 	if [ -f /var/lock/subsys/swserv ]; then
@@ -91,11 +90,13 @@ case "$1" in
 		killproc swserv
 		RETVAL=$?
 	else
-		msg_not_running swserv
-		exit 1
+		msg_not_running swserv >&2
+		exit 7
 	fi
 	;;
   *)
 	msg_usage "$0 {start|stop|restart|reload|force-reload|status}"
-	exit 1
+	exit 3
 esac
+
+exit $RETVAL
