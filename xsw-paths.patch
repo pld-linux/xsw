@@ -7,7 +7,7 @@ diff -durN xsw1.33h.orig/client/xshipwarsrc xsw1.33h/client/xshipwarsrc
  LocalToplevelDir = .shipwars
 -ToplevelDir = /usr/share/games/xshipwars
 -EtcDir = etc
-+ToplevelDir = /usr/X11R6/share/xshipwars
++ToplevelDir = /usr/share/xshipwars
 +EtcDir = /etc/xshipwars
  ImagesDir = images
  SoundsDir = sounds
@@ -23,9 +23,9 @@ diff -durN xsw1.33h.orig/client/xsw.h xsw1.33h/client/xsw.h
 -#define DEF_XSW_IMAGES_DIR	"/usr/share/games/xshipwars/images"
 -#define DEF_XSW_SOUNDS_DIR	"/usr/share/games/xshipwars/sounds"
 -#define DEF_XSW_ETC_DIR		"/usr/share/games/xshipwars/etc"
-+#define DEF_XSW_TOPLEVEL_DIR	"/usr/X11R6/share/xshipwars"
-+#define DEF_XSW_IMAGES_DIR	"/usr/X11R6/share/xshipwars/images"
-+#define DEF_XSW_SOUNDS_DIR	"/usr/X11R6/share/xshipwars/sounds"
++#define DEF_XSW_TOPLEVEL_DIR	"/usr/share/xshipwars"
++#define DEF_XSW_IMAGES_DIR	"/usr/share/xshipwars/images"
++#define DEF_XSW_SOUNDS_DIR	"/usr/share/xshipwars/sounds"
 +#define DEF_XSW_ETC_DIR		"/etc/xshipwars"
  #define DEF_ETC_DIR		"/etc"
  #define DEF_SW_SERVER_DIR	"/home/swserv"
@@ -38,7 +38,7 @@ diff -durN xsw1.33h.orig/monitor/config.h xsw1.33h/monitor/config.h
   *	Default path containing the images:
   */
 -#define DEF_IMAGES_DIR		"/usr/share/games/xshipwars/images/monitor"
-+#define DEF_IMAGES_DIR		"/usr/X11R6/share/xshipwars/images/monitor"
++#define DEF_IMAGES_DIR		"/usr/share/xshipwars/images/monitor"
  
  /*
   *	Default toplevel path of the server:
@@ -108,8 +108,8 @@ diff -durN xsw1.33h.orig/unvedit/config.h xsw1.33h/unvedit/config.h
   */
 -#define DEF_XSW_TOPLEVEL_DIR	"/usr/share/games/xshipwars"
 -#define DEF_XSW_IMAGES_DIR	"/usr/share/games/xshipwars/images"
-+#define DEF_XSW_TOPLEVEL_DIR	"/usr/X11R6/share/xshipwars"
-+#define DEF_XSW_IMAGES_DIR	"/usr/X11R6/share/xshipwars/images"
++#define DEF_XSW_TOPLEVEL_DIR	"/usr/share/xshipwars"
++#define DEF_XSW_IMAGES_DIR	"/usr/share/xshipwars/images"
  #define DEF_XSW_SERVER_DIR	"/home/swserv"
  
  /*
