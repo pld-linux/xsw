@@ -1,0 +1,23 @@
+--- xsw-1.34.0/include/string.h.orig	Thu Jul 26 10:24:24 2001
++++ xsw-1.34.0/include/string.h	Thu Aug 28 15:27:24 2003
+@@ -24,7 +24,9 @@
+ extern int strcasecmp(const char *s1, const char *s2);
+ #endif
+ extern const char *strseekblank(const char *s);
++#ifndef __linux__
+ extern char *strcasestr(const char *haystack, const char *needle);
++#endif
+ extern int strpfx(const char *str, const char *pfx);
+ extern int strcasepfx(const char *str, const char *pfx);
+ extern void strtoupper(char *s);
+--- xsw-1.34.0/include/xsw_ctype.h.orig	Thu Jul 26 10:26:38 2001
++++ xsw-1.34.0/include/xsw_ctype.h	Thu Aug 28 15:26:16 2003
+@@ -1,7 +1,7 @@
+ // xsw_ctype.h
+ // This is intended as a prototype for files using the global/ctype.cpp file.
+ 
+-#if !defined(__FreeBSD__) && !defined(__NetBSD__)
++#if !defined(__FreeBSD__) && !defined(__NetBSD__) && !defined(__linux__)
+ # if defined(__cplusplus) || defined(c_plusplus)
+ 
+ #ifndef isblank
