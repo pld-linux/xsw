@@ -18,6 +18,7 @@ URL:		http://wolfpack.twu.net/ShipWars/XShipWars/
 BuildRequires:	XFree86-devel
 BuildRequires:	esound-devel
 BuildRequires:	libjsw-devel
+BuildRequires:	rpmbuild(macros) >= 1.159
 BuildRequires:	yiff-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -51,13 +52,15 @@ Summary:	XShipWars server
 Summary(pl):	Serwer XShipWars
 Group:		X11/Applications/Games
 PreReq:		rc-scripts
-Requires(pre):	/usr/bin/getgid
 Requires(pre):	/bin/id
+Requires(pre):	/usr/bin/getgid
 Requires(pre):	/usr/sbin/groupadd
 Requires(pre):	/usr/sbin/useradd
 Requires(post,preun):	/sbin/chkconfig
 Requires(postun):	/usr/sbin/groupdel
 Requires(postun):	/usr/sbin/userdel
+Provides:	group(swserv)
+Provides:	user(swserv)
 
 %description server
 XShipWars is a highly customizable and massivly multiplayer space
@@ -200,8 +203,8 @@ fi
 
 %postun server
 if [ "$1" = "0" ]; then
-	/usr/sbin/userdel swserv
-	/usr/sbin/groupdel swserv
+	%userremove swserv
+	%groupremove swserv
 fi
 
 %files client
