@@ -26,7 +26,7 @@ TMPDIR="/tmp"; export TMPDIR
 case "$1" in
     start)
         if [ ! -f /var/lock/subsys/swserv ]; then
-		cd /home/swserv
+		cd /home/services/swserv
 		
 		msg_starting swserv
 

@@ -117,7 +117,7 @@ install -d $RPM_BUILD_ROOT{%{_applnkdir}/Games,/etc/sysconfig,/etc/rc.d/init.d}
 rm -f $RPM_BUILD_ROOT/%{_sysconfdir}/xshipwars/universes # comes with data
 
 %{__make} server_install_unix \
-	SWSERV_BASE_DIR=$RPM_BUILD_ROOT/home/swserv \
+	SWSERV_BASE_DIR=$RPM_BUILD_ROOT/home/services/swserv \
 	SWSERV_BIN_DIR=$RPM_BUILD_ROOT/%{_bindir} \
 	SWSERV_ETC_DIR=$RPM_BUILD_ROOT/%{_sysconfdir}/swserv
 
@@ -145,7 +145,7 @@ grep -q swserv /etc/group || (
 )
 grep -q swserv /etc/passwd || (
     /usr/sbin/useradd -M -o -r -u 91 \
-        -g swserv -c "XShipWars server" -d /home/swserv swserv 1>&2 || :
+        -g swserv -c "XShipWars server" -d /home/services/swserv swserv 1>&2 || :
 )
 
 %post server
@@ -180,12 +180,12 @@ fi
 %files server
 %defattr(644,root,root,755)
 %doc LICENSE* DOCS_NOW_ONLINE*
-%dir %attr(751,root,swserv) /home/swserv
-%attr(775,root,swserv) /home/swserv/db
-%attr(775,root,swserv) /home/swserv/logs
-%attr(775,root,swserv) /home/swserv/public_html
-%attr(775,root,swserv) /home/swserv/tmp
-%attr(774,root,swserv) /home/swserv/restart
+%dir %attr(751,root,swserv) /home/services/swserv
+%attr(775,root,swserv) /home/services/swserv/db
+%attr(775,root,swserv) /home/services/swserv/logs
+%attr(775,root,swserv) /home/services/swserv/public_html
+%attr(775,root,swserv) /home/services/swserv/tmp
+%attr(774,root,swserv) /home/services/swserv/restart
 %attr(754,root,swserv) %{_bindir}/swserv
 %dir %{_sysconfdir}/swserv
 %config %verify(not size mtime md5) %{_sysconfdir}/swserv/*
