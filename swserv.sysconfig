@@ -1,0 +1,14 @@
+# Customized setings for swserv
+
+#   Specify your universe files set here:
+#
+UNVIN=db/generic_in.unv
+UNVOUT=db/generic_out.unv
+UNVOLD=db/generic_old.unv
+
+#   Specify your configuration file
+#
+CONF=/etc/swserv/generic.conf
+
+# Define nice level for swserv
+SERVICE_RUN_NICE_LEVEL="+5"
