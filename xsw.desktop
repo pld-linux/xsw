@@ -4,6 +4,6 @@ Name[pl]=Klient XShipWars
 Comment=XShipWars client
 Comment[pl]=Klient gry XShipWars
 Exec=xsw
-Terminal=0
+Terminal=false
 Type=Application
 # vi: encoding=utf-8

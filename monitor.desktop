@@ -2,6 +2,6 @@
 Name=XShipWars monitor
 Comment=XShipWars monitor
 Exec=monitor
-Terminal=0
+Terminal=false
 Type=Application
 # vi: encoding=utf-8
