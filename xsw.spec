@@ -156,12 +156,12 @@ rm -rf $RPM_BUILD_ROOT
 %files server
 %defattr(644,root,root,755)
 %doc LICENSE* DOCS_NOW_ONLINE* 
-%dir %attr(644,root,swserv) /home/swserv
-%attr(664,root,swserv) /home/swserv/db
-%attr(664,root,swserv) /home/swserv/logs
-%attr(664,root,swserv) /home/swserv/public_html
-%attr(664,root,swserv) /home/swserv/tmp
-%attr(754,root,swserv) /home/swserv/restart
+%dir %attr(751,root,swserv) /home/swserv
+%attr(775,root,swserv) /home/swserv/db
+%attr(775,root,swserv) /home/swserv/logs
+%attr(775,root,swserv) /home/swserv/public_html
+%attr(775,root,swserv) /home/swserv/tmp
+%attr(774,root,swserv) /home/swserv/restart
 %attr(754,root,swserv) %{_bindir}/swserv
 %dir %{_sysconfdir}/swserv
 %config %verify(not size mtime md5) %{_sysconfdir}/swserv/*
