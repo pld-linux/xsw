@@ -2,8 +2,8 @@ Summary:	XShipWars - Multiplayer space gaming system
 Summary(pl):	XShipWars - System gry kosmicznej dla wielu graczy
 Name:		xsw
 Version:	1.34.0
-Release:	1
-License:	Modified GPL
+Release:	2
+License:	GPL-like
 Group:		Applications/Games
 Source0:	ftp://gd.tuwien.ac.at/games/wolfpack/%{name}-%{version}.tar.bz2
 Source1:	%{name}.desktop
