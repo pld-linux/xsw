@@ -5,8 +5,6 @@ Version:	1.34.0
 Release:	1
 License:	Modified GPL
 Group:		Applications/Games
-Group(de):	Applikationen/Spiele
-Group(pl):	Aplikacje/Gry
 Source0:	ftp://gd.tuwien.ac.at/games/wolfpack/%{name}-%{version}.tar.bz2
 Source1:	%{name}.desktop
 Source2:	monitor.desktop
@@ -38,8 +36,6 @@ wielu graczy do grania przez Internet.
 Summary:	XShipWars client
 Summary(pl):	Klient XShipWars
 Group:		Applications/Games
-Group(de):	Applikationen/Spiele
-Group(pl):	Aplikacje/Gry
 Requires:	%{name}-sounds
 Requires:	%{name}-images
 Requires:	%{name}-data
@@ -57,8 +53,6 @@ wielu graczy do grania przez Internet. Ten pakiet zawiera klienta.
 Summary:	XShipWars server
 Summary(pl):	Serwer XShipWars
 Group:		Applications/Games
-Group(de):	Applikationen/Spiele
-Group(pl):	Aplikacje/Gry
 Prereq:		/sbin/chkconfig
 
 %description server
@@ -74,8 +68,6 @@ wielu graczy do grania przez Internet. Ten pakiet zawiera serwer.
 Summary:	XShipWars monitor
 Summary(pl):	Monitor XShipWars
 Group:		Applications/Games
-Group(de):	Applikationen/Spiele
-Group(pl):	Aplikacje/Gry
 
 %description monitor
 XShipWars is a highly customizable and massivly multiplayer space
@@ -90,8 +82,6 @@ wielu graczy do grania przez Internet. Ten pakiet zawiera monitor gry.
 Summary:	XShipWars universe editor
 Summary(pl):	Edytor wszech¶wiata XShipWars
 Group:		Applications/Games
-Group(de):	Applikationen/Spiele
-Group(pl):	Aplikacje/Gry
 
 %description unvedit
 XShipWars is a highly customizable and massivly multiplayer space
