@@ -1,15 +1,16 @@
 Summary:	XShipWars - Multiplayer space gaming system
+Summary(pl):	XShipWars - System gry kosmicznej dla wielu graczy
 Name:		xsw
 Version:	1.33h
-Release:	1
+Release:	2
 License:	Modified GPL
 Group:		Applications/Games
 Group(de):	Applikationen/Spiele
 Group(pl):	Aplikacje/Gry
 Source0:	ftp://fox.mit.edu/pub/%{name}/%{name}%{version}.tgz
-Source1:	xsw.desktop
+Source1:	%{name}.desktop
 Source2:	monitor.desktop
-Source3: 	unvedit.desktop
+Source3:	unvedit.desktop
 Source4:	swserv.init
 Source5:	swserv.sysconfig
 Patch0:		%{name}-paths.patch
@@ -29,44 +30,78 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 XShipWars is a highly customizable and massivly multiplayer space
 gamming system designed for play entirly over the Internet.
 
+%description -l pl
+XShipWars jest wysoko konfigurowalnym systemem gry kosmicznej dla
+wielu graczy do grania przez Internet.
+
 %package client
 Summary:	XShipWars client
+Summary(pl):	Klient XShipWars
 Group:		Applications/Games
+Group(de):	Applikationen/Spiele
+Group(pl):	Aplikacje/Gry
 Requires:	%{name}-sounds
 Requires:	%{name}-images
 Requires:	%{name}-data
 
 %description client
 XShipWars is a highly customizable and massivly multiplayer space
-gamming system designed for play entirly over the Internet.
-This package contains game client.
+gamming system designed for play entirly over the Internet. This
+package contains game client.
+
+%description client -l pl
+XShipWars jest wysoko konfigurowalnym systemem gry kosmicznej dla
+wielu graczy do grania przez Internet. Ten pakiet zawiera klienta.
 
 %package server
 Summary:	XShipWars server
+Summary(pl):	Serwer XShipWars
 Group:		Applications/Games
+Group(de):	Applikationen/Spiele
+Group(pl):	Aplikacje/Gry
+Prereq:		/sbin/chkconfig
 
 %description server
 XShipWars is a highly customizable and massivly multiplayer space
-gamming system designed for play entirly over the Internet.
-This package contains game server.
+gamming system designed for play entirly over the Internet. This
+package contains game server.
+
+%description server -l pl
+XShipWars jest wysoko konfigurowalnym systemem gry kosmicznej dla
+wielu graczy do grania przez Internet. Ten pakiet zawiera serwer.
 
 %package monitor
 Summary:	XShipWars monitor
+Summary(pl):	Monitor XShipWars
 Group:		Applications/Games
+Group(de):	Applikationen/Spiele
+Group(pl):	Aplikacje/Gry
 
 %description monitor
 XShipWars is a highly customizable and massivly multiplayer space
-gamming system designed for play entirly over the Internet.
-This package contains game monitor.
+gamming system designed for play entirly over the Internet. This
+package contains game monitor.
+
+%description monitor -l pl
+XShipWars jest wysoko konfigurowalnym systemem gry kosmicznej dla
+wielu graczy do grania przez Internet. Ten pakiet zawiera monitor gry.
 
 %package unvedit
 Summary:	XShipWars universe editor
+Summary(pl):	Edytor wszech¶wiata XShipWars
 Group:		Applications/Games
+Group(de):	Applikationen/Spiele
+Group(pl):	Aplikacje/Gry
 
 %description unvedit
 XShipWars is a highly customizable and massivly multiplayer space
-gamming system designed for play entirly over the Internet.
-This package contains universe editor for the game.
+gamming system designed for play entirly over the Internet. This
+package contains universe editor for the game.
+
+%description unvedit -l pl
+XShipWars jest wysoko konfigurowalnym systemem gry kosmicznej dla
+wielu graczy do grania przez Internet. Ten pakiet zawiera edytor
+wszech¶wiata do gry.
 
 %prep
 %setup -qn %{name}%{version}
@@ -89,7 +124,7 @@ install -d $RPM_BUILD_ROOT{%{_applnkdir}/Games,/etc/sysconfig,/etc/rc.d/init.d}
 	XSW_DIR=$RPM_BUILD_ROOT/%{_xdatadir}/xshipwars \
 	XSW_ETC_DIR=$RPM_BUILD_ROOT/%{_sysconfdir}/xshipwars
 
-rm $RPM_BUILD_ROOT/%{_sysconfdir}/xshipwars/universes # comes with data
+rm -f $RPM_BUILD_ROOT/%{_sysconfdir}/xshipwars/universes # comes with data
 
 %{__make} server_install_unix \
 	SWSERV_BASE_DIR=$RPM_BUILD_ROOT/home/swserv \
@@ -111,7 +146,10 @@ install %{SOURCE3} $RPM_BUILD_ROOT%{_applnkdir}/Games
 install %{SOURCE4} $RPM_BUILD_ROOT/etc/rc.d/init.d/swserv
 install %{SOURCE5} $RPM_BUILD_ROOT/etc/sysconfig/swserv
 
-%pre
+%clean
+rm -rf $RPM_BUILD_ROOT
+
+%pre server
 grep -q swserv /etc/group || (
     /usr/sbin/groupadd -g 91 -r -f swserv 1>&2 || :
 )
@@ -120,7 +158,7 @@ grep -q swserv /etc/passwd || (
         -g swserv -c "XShipWars server" -d /home/swserv swserv 1>&2 || :
 )
 
-%post
+%post server
 if [ "$1" = "1" ]; then
 	/sbin/chkconfig --add swserv
 	echo "Run \"/etc/rc.d/init.d/swserv start\" to start swserv." >&2
@@ -130,7 +168,7 @@ else
 	fi
 fi
 
-%preun
+%preun server
 if [ "$1" = 0 ]; then
 	if [ -f /var/lock/sybsys/swserv ]; then
 		/etc/rc.d/init.d/swserv stop >&2
@@ -138,10 +176,6 @@ if [ "$1" = 0 ]; then
 	/sbin/chkconfig --del swserv
 	rm -f %{_datadir}/swserv/errors
 fi
-
-
-%clean
-rm -rf $RPM_BUILD_ROOT
 
 %files client
 %defattr(644,root,root,755)
