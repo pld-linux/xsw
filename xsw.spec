@@ -24,7 +24,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %define		_xmandir	/usr/X11R6/man
 %define		_xdatadir	/usr/X11R6/share
 
-%description 
+%description
 XShipWars is a highly customizable and massivly multiplayer space
 gamming system designed for play entirly over the Internet.
 
@@ -98,7 +98,7 @@ wszech¶wiata do gry.
 %patch0 -p1
 
 %build
-%configure 
+%configure
 %{__make} client_linux
 %{__make} server_linux
 %{__make} monitor_linux
@@ -169,7 +169,7 @@ fi
 
 %files client
 %defattr(644,root,root,755)
-%doc LICENSE* DOCS_NOW_ONLINE* 
+%doc LICENSE* DOCS_NOW_ONLINE*
 %dir %{_sysconfdir}/xshipwars
 %config %verify(not size mtime md5) %{_sysconfdir}/xshipwars/*
 %attr(755,root,root) %{_xbindir}/xsw
@@ -179,7 +179,7 @@ fi
 
 %files server
 %defattr(644,root,root,755)
-%doc LICENSE* DOCS_NOW_ONLINE* 
+%doc LICENSE* DOCS_NOW_ONLINE*
 %dir %attr(751,root,swserv) /home/swserv
 %attr(775,root,swserv) /home/swserv/db
 %attr(775,root,swserv) /home/swserv/logs
@@ -194,14 +194,14 @@ fi
 
 %files monitor
 %defattr(644,root,root,755)
-%doc LICENSE* DOCS_NOW_ONLINE* 
+%doc LICENSE* DOCS_NOW_ONLINE*
 %attr(755,root,root) %{_xbindir}/monitor
 %{_xdatadir}/xshipwars/images/monitor
 %{_applnkdir}/Games/monitor.desktop
 
 %files unvedit
 %defattr(644,root,root,755)
-%doc LICENSE* DOCS_NOW_ONLINE* 
+%doc LICENSE* DOCS_NOW_ONLINE*
 %attr(755,root,root) %{_xbindir}/unvedit
 %{_xdatadir}/xshipwars/images/unvedit
 %{_applnkdir}/Games/unvedit.desktop
