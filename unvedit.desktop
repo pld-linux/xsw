@@ -1,6 +1,8 @@
 [Desktop Entry]
 Name=XShipWars universe editor
+Name[pl]=Edytor wszechświata XShipWars
 Comment=XShipWars universe editor
+Comment[pl]=Edytor wszechświata XShipWars
 Exec=unvedit
 Terminal=0
 Type=Application
