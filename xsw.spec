@@ -112,33 +112,22 @@ install %{SOURCE4} $RPM_BUILD_ROOT/etc/rc.d/init.d/swserv
 install %{SOURCE5} $RPM_BUILD_ROOT/etc/sysconfig/swserv
 
 %pre
-grep -q swserv /etc/group || (
-    /usr/sbin/groupadd -g 91 -r -f swserv 1>&2 || :
-)
-grep -q swserv /etc/passwd || (
-    /usr/sbin/useradd -M -o -r -u 91 \
-        -g swserv -c "XShipWars server" -d /home/swserv swserv 1>&2 || :
-)
+GROUP=swserv; GID=91; %groupadd
+USER=swserv; UID=91; HOMEDIR=/home/swserv; SHELL=/bin/bash
+COMMENT="XShipWars server"; %useradd
 
 %post
-if [ "$1" = "1" ]; then
-	/sbin/chkconfig --add swserv
-	echo "Run \"/etc/rc.d/init.d/swserv start\" to start swserv." >&2
-else
-	if [ -f /var/lock/subsys/swserv ]; then
-		/etc/rc.d/init.d/swserv restart >&2
-	fi
-fi
+NAME=swserv; %chkconfig_add
 
 %preun
+NAME=swserv; %chkconfig_del
 if [ "$1" = 0 ]; then
-	if [ -f /var/lock/sybsys/swserv ]; then
-		/etc/rc.d/init.d/swserv stop >&2
-	fi
-	/sbin/chkconfig --del swserv
 	rm -f %{_datadir}/swserv/errors
 fi
 
+%postun
+USER=swserv; %userdel
+GROUP=swserv; %groupdel
 
 %clean
 rm -rf $RPM_BUILD_ROOT
