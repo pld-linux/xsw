@@ -1,0 +1,59 @@
+diff -durN xsw1.33h.orig/client/xsw.h xsw1.33h/client/xsw.h
+--- xsw1.33h.orig/client/xsw.h	Tue Jul  4 05:06:38 2000
++++ xsw1.33h/client/xsw.h	Sat May  5 17:14:09 2001
+@@ -151,10 +151,10 @@
+ #define DEF_SW_SERVER_DIR	CWD_STR
+ #else
+ #define DEF_LOCAL_SHIPWARS_DIR	".shipwars"
+-#define DEF_XSW_TOPLEVEL_DIR	"/usr/share/games/xshipwars"
+-#define DEF_XSW_IMAGES_DIR	"/usr/share/games/xshipwars/images"
+-#define DEF_XSW_SOUNDS_DIR	"/usr/share/games/xshipwars/sounds"
+-#define DEF_XSW_ETC_DIR		"/usr/share/games/xshipwars/etc"
++#define DEF_XSW_TOPLEVEL_DIR	"/usr/X11R6/share/xshipwars"
++#define DEF_XSW_IMAGES_DIR	"/usr/X11R6/share/xshipwars/images"
++#define DEF_XSW_SOUNDS_DIR	"/usr/X11R6/share/xshipwars/sounds"
++#define DEF_XSW_ETC_DIR		"/etc/xshipwars"
+ #define DEF_ETC_DIR		"/etc"
+ #define DEF_SW_SERVER_DIR	"/home/swserv"
+ #endif
+diff -durN xsw1.33h.orig/monitor/config.h xsw1.33h/monitor/config.h
+--- xsw1.33h.orig/monitor/config.h	Wed Jan  5 07:14:20 2000
++++ xsw1.33h/monitor/config.h	Sat May  5 17:13:50 2001
+@@ -22,7 +22,7 @@
+ /*
+  *	Default path containing the images:
+  */
+-#define DEF_IMAGES_DIR		"/usr/share/games/xshipwars/images/monitor"
++#define DEF_IMAGES_DIR		"/usr/X11R6/share/xshipwars/images/monitor"
+ 
+ /*
+  *	Default toplevel path of the server:
+diff -durN xsw1.33h.orig/server/swserv.h xsw1.33h/server/swserv.h
+--- xsw1.33h.orig/server/swserv.h	Tue Jul  4 05:07:29 2000
++++ xsw1.33h/server/swserv.h	Sat May  5 17:15:02 2001
+@@ -115,9 +115,9 @@
+ # define ETC_DIR		"."
+ #else
+ # define SWSERV_TOPLEVEL_DIR	"/home/swserv"
+-# define SWSERV_BIN_DIR		"/home/swserv/bin"
++# define SWSERV_BIN_DIR		"/usr/bin"
+ # define SWSERV_DB_DIR		"/home/swserv/db"
+-# define SWSERV_ETC_DIR		"/home/swserv/etc"
++# define SWSERV_ETC_DIR		"/etc/swserv"
+ # define SWSERV_LOGS_DIR	"/home/swserv/logs"
+ # define SWSERV_PLUGINS_DIR	"/home/swserv/plugins"
+ # define SWSERV_PUBLIC_HTML_DIR	"/home/swserv/public_html"
+diff -durN xsw1.33h.orig/unvedit/config.h xsw1.33h/unvedit/config.h
+--- xsw1.33h.orig/unvedit/config.h	Sat Jul 15 22:07:57 2000
++++ xsw1.33h/unvedit/config.h	Sat May  5 17:15:41 2001
+@@ -10,8 +10,8 @@
+ /*
+  *	Default paths:
+  */
+-#define DEF_XSW_TOPLEVEL_DIR	"/usr/share/games/xshipwars"
+-#define DEF_XSW_IMAGES_DIR	"/usr/share/games/xshipwars/images"
++#define DEF_XSW_TOPLEVEL_DIR	"/usr/X11R6/share/xshipwars"
++#define DEF_XSW_IMAGES_DIR	"/usr/X11R6/share/xshipwars/images"
+ #define DEF_XSW_SERVER_DIR	"/home/swserv"
+ 
+ /*
