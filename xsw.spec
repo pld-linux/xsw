@@ -18,7 +18,7 @@ URL:		http://wolfpack.twu.net/ShipWars/XShipWars/
 BuildRequires:	XFree86-devel
 BuildRequires:	esound-devel
 BuildRequires:	libjsw-devel
-BuildRequires:	rpmbuild(macros) >= 1.159
+BuildRequires:	rpmbuild(macros) >= 1.202
 BuildRequires:	yiff-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -166,31 +166,17 @@ install %{SOURCE5} $RPM_BUILD_ROOT/etc/sysconfig/swserv
 rm -rf $RPM_BUILD_ROOT
 
 %pre server
-if [ -n "`/usr/bin/getgid swserv`" ]; then
-	if [ "`/usr/bin/getgid swserv`" != "96" ]; then
-		if [ "$1" = 1 -a "`/usr/bin/getgid swserv`" = "91" ]; then
-			/usr/sbin/groupmod -g 96 swserv
-		else
-			echo "Error: group swserv doesn't have gid=96. Correct this before installing xsw-server." 1>&2
-			exit 1
-		fi
-	fi
-else
-	/usr/sbin/groupadd -g 96 -r -f swserv 1>&2
+# trigger would had been better place for this
+if [ "$1" = 1 -a "`/usr/bin/getgid swserv`" = "91" ]; then
+	/usr/sbin/groupmod -g 96 swserv
 fi
-if [ -n "`/bin/id -u swserv 2>/dev/null`" ]; then
-	if [ "`/bin/id -u swserv`" != "96" ]; then
-		if [ "$1" = 1 -a "`/bin/id -u swserv`" = "91" ]; then
-			/usr/sbin/usermod -u 96 swserv 
-		else
-			echo "Error: user swserv doesn't have uid=96. Correct this before installing xsw-server." 1>&2
-			exit 1
-		fi
-	fi
-else
-	/usr/sbin/useradd -M -o -r -u 96 -g swserv -c "XShipWars server" \
-		-d /home/services/swserv -s /bin/sh swserv 1>&2
+%groupadd -P %{name}-server -g 96 -r -f swserv
+
+# trigger would had been better place for this
+if [ -n "`/bin/id -u swserv 2>/dev/null`" ] && [ "$1" = 1 -a "`/bin/id -u swserv`" = "91" ]; then
+	/usr/sbin/usermod -u 96 swserv 
 fi
+%useradd -P %{name}-server -M -o -r -u 96 -g swserv -c "XShipWars server" -d /home/services/swserv -s /bin/sh swserv
 
 %post server
 if [ "$1" = "1" ]; then
