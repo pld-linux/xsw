@@ -1,7 +1,7 @@
 #!/bin/sh
 #
 # chkconfig:	- 98 03
-# description:	Starts and stops the XShipWars server 
+# description:	Starts and stops the XShipWars server
 #
 
 export PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/X11R6/bin
@@ -54,7 +54,7 @@ case "$1" in
 		#   server's configuration file.
 		#
 		if [ -f $CONF ]; then
-			daemon su swserv -c "\"exec swserv $CONF\"" 
+			daemon su swserv -c "\"exec swserv $CONF\""
 			RETVAL=$?
 			[ $RETVAL -eq 0 ] && touch /var/lock/subsys/swserv
 		else
