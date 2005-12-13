@@ -34,9 +34,9 @@ wielu graczy do grania przez Internet.
 Summary:	XShipWars client
 Summary(pl):	Klient XShipWars
 Group:		X11/Applications/Games
-Requires:	xsw-sounds
-Requires:	xsw-images
 Requires:	xsw-data
+Requires:	xsw-images
+Requires:	xsw-sounds
 
 %description client
 XShipWars is a highly customizable and massivly multiplayer space
@@ -51,16 +51,16 @@ wielu graczy do grania przez Internet. Ten pakiet zawiera klienta.
 Summary:	XShipWars server
 Summary(pl):	Serwer XShipWars
 Group:		X11/Applications/Games
-PreReq:		rc-scripts
+Requires(post,preun):	/sbin/chkconfig
+Requires(postun):	/usr/sbin/groupdel
+Requires(postun):	/usr/sbin/userdel
 Requires(pre):	/bin/id
 Requires(pre):	/usr/bin/getgid
 Requires(pre):	/usr/sbin/groupadd
 Requires(pre):	/usr/sbin/groupmod
 Requires(pre):	/usr/sbin/useradd
 Requires(pre):	/usr/sbin/usermod
-Requires(post,preun):	/sbin/chkconfig
-Requires(postun):	/usr/sbin/groupdel
-Requires(postun):	/usr/sbin/userdel
+Requires:	rc-scripts
 Provides:	group(swserv)
 Provides:	user(swserv)
 
@@ -174,7 +174,7 @@ fi
 
 # trigger would had been better place for this
 if [ -n "`/bin/id -u swserv 2>/dev/null`" ] && [ "$1" = 1 -a "`/bin/id -u swserv`" = "91" ]; then
-	/usr/sbin/usermod -u 96 swserv 
+	/usr/sbin/usermod -u 96 swserv
 fi
 %useradd -P %{name}-server -M -o -r -u 96 -g swserv -c "XShipWars server" -d /home/services/swserv -s /bin/sh swserv
 
@@ -207,7 +207,7 @@ fi
 %defattr(644,root,root,755)
 %doc CREDITS LICENSE README TODO
 %dir %{_sysconfdir}/xshipwars
-%config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/xshipwars/*
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/xshipwars/*
 %attr(755,root,root) %{_bindir}/xsw
 %dir %{_datadir}/xshipwars
 %{_datadir}/xshipwars/images
@@ -225,8 +225,8 @@ fi
 %attr(774,root,swserv) /home/services/swserv/restart
 %attr(754,root,swserv) %{_bindir}/swserv
 %dir %{_sysconfdir}/swserv
-%config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/swserv/*
-%config(noreplace) %verify(not size mtime md5) /etc/sysconfig/swserv
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/swserv/*
+%config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/swserv
 %attr(754,root,root) /etc/rc.d/init.d/swserv
 
 %files monitor
