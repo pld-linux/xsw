@@ -1,5 +1,5 @@
 Summary:	XShipWars - Multiplayer space gaming system
-Summary(pl.UTF-8):   XShipWars - System gry kosmicznej dla wielu graczy
+Summary(pl.UTF-8):	XShipWars - System gry kosmicznej dla wielu graczy
 Name:		xsw
 Version:	1.34.0
 Release:	3
@@ -32,7 +32,7 @@ wielu graczy do grania przez Internet.
 
 %package client
 Summary:	XShipWars client
-Summary(pl.UTF-8):   Klient XShipWars
+Summary(pl.UTF-8):	Klient XShipWars
 Group:		X11/Applications/Games
 Requires:	xsw-data
 Requires:	xsw-images
@@ -49,7 +49,7 @@ wielu graczy do grania przez Internet. Ten pakiet zawiera klienta.
 
 %package server
 Summary:	XShipWars server
-Summary(pl.UTF-8):   Serwer XShipWars
+Summary(pl.UTF-8):	Serwer XShipWars
 Group:		X11/Applications/Games
 Requires(post,preun):	/sbin/chkconfig
 Requires(postun):	/usr/sbin/groupdel
@@ -75,7 +75,7 @@ wielu graczy do grania przez Internet. Ten pakiet zawiera serwer.
 
 %package monitor
 Summary:	XShipWars monitor
-Summary(pl.UTF-8):   Monitor XShipWars
+Summary(pl.UTF-8):	Monitor XShipWars
 Group:		X11/Applications/Games
 Requires:	%{name}-client
 
@@ -90,7 +90,7 @@ wielu graczy do grania przez Internet. Ten pakiet zawiera monitor gry.
 
 %package unvedit
 Summary:	XShipWars universe editor
-Summary(pl.UTF-8):   Edytor wszechświata XShipWars
+Summary(pl.UTF-8):	Edytor wszechświata XShipWars
 Group:		X11/Applications/Games
 Requires:	%{name}-client
 
