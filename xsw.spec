@@ -1,5 +1,5 @@
 Summary:	XShipWars - Multiplayer space gaming system
-Summary(pl):	XShipWars - System gry kosmicznej dla wielu graczy
+Summary(pl.UTF-8):   XShipWars - System gry kosmicznej dla wielu graczy
 Name:		xsw
 Version:	1.34.0
 Release:	3
@@ -26,13 +26,13 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 XShipWars is a highly customizable and massivly multiplayer space
 gamming system designed for play entirly over the Internet.
 
-%description -l pl
+%description -l pl.UTF-8
 XShipWars jest wysoko konfigurowalnym systemem gry kosmicznej dla
 wielu graczy do grania przez Internet.
 
 %package client
 Summary:	XShipWars client
-Summary(pl):	Klient XShipWars
+Summary(pl.UTF-8):   Klient XShipWars
 Group:		X11/Applications/Games
 Requires:	xsw-data
 Requires:	xsw-images
@@ -43,13 +43,13 @@ XShipWars is a highly customizable and massivly multiplayer space
 gamming system designed for play entirly over the Internet. This
 package contains game client.
 
-%description client -l pl
+%description client -l pl.UTF-8
 XShipWars jest wysoko konfigurowalnym systemem gry kosmicznej dla
 wielu graczy do grania przez Internet. Ten pakiet zawiera klienta.
 
 %package server
 Summary:	XShipWars server
-Summary(pl):	Serwer XShipWars
+Summary(pl.UTF-8):   Serwer XShipWars
 Group:		X11/Applications/Games
 Requires(post,preun):	/sbin/chkconfig
 Requires(postun):	/usr/sbin/groupdel
@@ -69,13 +69,13 @@ XShipWars is a highly customizable and massivly multiplayer space
 gamming system designed for play entirly over the Internet. This
 package contains game server.
 
-%description server -l pl
+%description server -l pl.UTF-8
 XShipWars jest wysoko konfigurowalnym systemem gry kosmicznej dla
 wielu graczy do grania przez Internet. Ten pakiet zawiera serwer.
 
 %package monitor
 Summary:	XShipWars monitor
-Summary(pl):	Monitor XShipWars
+Summary(pl.UTF-8):   Monitor XShipWars
 Group:		X11/Applications/Games
 Requires:	%{name}-client
 
@@ -84,13 +84,13 @@ XShipWars is a highly customizable and massivly multiplayer space
 gamming system designed for play entirly over the Internet. This
 package contains game monitor.
 
-%description monitor -l pl
+%description monitor -l pl.UTF-8
 XShipWars jest wysoko konfigurowalnym systemem gry kosmicznej dla
 wielu graczy do grania przez Internet. Ten pakiet zawiera monitor gry.
 
 %package unvedit
 Summary:	XShipWars universe editor
-Summary(pl):	Edytor wszech∂wiata XShipWars
+Summary(pl.UTF-8):   Edytor wszech≈õwiata XShipWars
 Group:		X11/Applications/Games
 Requires:	%{name}-client
 
@@ -99,10 +99,10 @@ XShipWars is a highly customizable and massivly multiplayer space
 gamming system designed for play entirly over the Internet. This
 package contains universe editor for the game.
 
-%description unvedit -l pl
+%description unvedit -l pl.UTF-8
 XShipWars jest wysoko konfigurowalnym systemem gry kosmicznej dla
 wielu graczy do grania przez Internet. Ten pakiet zawiera edytor
-wszech∂wiata do gry.
+wszech≈õwiata do gry.
 
 %prep
 %setup -q
