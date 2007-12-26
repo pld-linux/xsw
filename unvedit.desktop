@@ -6,5 +6,4 @@ Comment[pl]=Edytor wszechświata XShipWars
 Exec=unvedit
 Terminal=false
 Type=Application
-Encoding=UTF-8
 # vi: encoding=utf-8
